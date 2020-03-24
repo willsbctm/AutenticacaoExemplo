@@ -10,11 +10,16 @@ namespace Autenticacao.Exemplo.Services
     public class TokenService
     {
         private readonly Chave identidade;
-        public TokenService(IOptions<Chave> identidade) => this.identidade = identidade.Value;
+        private readonly JwtSecurityTokenHandler geradorToken;
+
+        public TokenService(IOptions<Chave> identidade, JwtSecurityTokenHandler geradorToken)
+        {
+            this.identidade = identidade.Value;
+            this.geradorToken = geradorToken;
+        }
 
         public string Gerar(Usuario usuario)
         {
-            var geradorToken = new JwtSecurityTokenHandler();
             var dadosDoToken = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]

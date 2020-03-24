@@ -1,4 +1,5 @@
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using Autenticacao.Exemplo.Modelos;
 using Autenticacao.Exemplo.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -79,6 +80,7 @@ namespace Autenticacao.Exemplo
             services.AddTransient<UsuarioLogado>();
             services.AddTransient<IUsuariosService, UsuarioService>();
             services.AddTransient<TokenService>();
+            services.AddTransient<JwtSecurityTokenHandler>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
