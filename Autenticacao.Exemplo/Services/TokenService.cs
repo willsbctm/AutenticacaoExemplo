@@ -9,12 +9,12 @@ namespace Autenticacao.Exemplo.Services
 {
     public class TokenService
     {
-        private readonly Chave identidade;
+        private readonly Chave chave;
         private readonly JwtSecurityTokenHandler geradorToken;
 
-        public TokenService(IOptions<Chave> identidade, JwtSecurityTokenHandler geradorToken)
+        public TokenService(IOptions<Chave> chave, JwtSecurityTokenHandler geradorToken)
         {
-            this.identidade = identidade.Value;
+            this.chave = chave.Value;
             this.geradorToken = geradorToken;
         }
 
@@ -28,7 +28,7 @@ namespace Autenticacao.Exemplo.Services
                     new Claim(ClaimTypes.Email, usuario.Email)
                 }),
                 Expires = DateTime.UtcNow.AddHours(10),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(identidade.ObterBytes()), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(chave.ObterBytes()), SecurityAlgorithms.HmacSha256Signature)
             };
 
             var token = geradorToken.CreateToken(dadosDoToken);
